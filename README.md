@@ -1,5 +1,4 @@
-# 🌐 Personal Portfolio — Mine Rua
-
+# 🌐 Personal Portfolio — Nguyen Dat
 A full-stack personal portfolio website built with Django, showcasing skills, projects, certifications, and blog posts.
 
 **Live:** <In-progress>
