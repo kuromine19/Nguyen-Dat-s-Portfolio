@@ -1,0 +1,210 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}About{% endblock %}
+
+{% block extra_head %}
+<style>
+    .about-section {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 4rem 2rem;
+    }
+
+    .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 3rem;
+        align-items: start;
+        margin-top: 3rem;
+    }
+
+    /* Left column */
+    .about-profile { text-align: center; }
+    .profile-avatar {
+        width: 180px; height: 180px;
+        border-radius: 50%;
+        border: 3px solid var(--primary);
+        margin: 0 auto 1.2rem;
+        overflow: hidden;
+        box-shadow: 0 0 30px var(--primary-glow);
+        background: linear-gradient(135deg, rgba(14,131,136,0.3), rgba(43,228,240,0.1));
+        display: flex; align-items: center; justify-content: center;
+        font-family: 'Anton', sans-serif; font-size: 4rem; color: var(--primary);
+    }
+    .profile-name {
+        font-family: 'Oswald', sans-serif;
+        font-size: 1.4rem; font-weight: 600;
+        color: var(--text-primary); letter-spacing: 2px;
+        margin-bottom: 0.2rem;
+    }
+    .profile-title {
+        font-size: 0.78rem; color: var(--primary);
+        letter-spacing: 2px; text-transform: uppercase;
+        margin-bottom: 1.2rem;
+    }
+
+    .contact-links { display: flex; flex-direction: column; gap: 0.6rem; }
+    .contact-link {
+        display: flex; align-items: center; gap: 0.6rem;
+        font-size: 0.78rem; color: var(--text-muted);
+        text-decoration: none; padding: 0.5rem 0.8rem;
+        border: 1px solid var(--surface-border); border-radius: 8px;
+        transition: all 0.25s;
+    }
+    .contact-link i { color: var(--primary); width: 16px; text-align: center; }
+    .contact-link:hover { border-color: var(--primary); color: var(--text-primary); }
+
+    /* Right column */
+    .about-bio h2 {
+        font-family: 'Oswald', sans-serif;
+        font-size: 1.8rem; font-weight: 600;
+        color: var(--text-primary); margin-bottom: 0.5rem;
+    }
+    .about-bio .underline {
+        width: 50px; height: 3px;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        border-radius: 2px; margin-bottom: 1.5rem;
+    }
+    .about-bio p {
+        font-size: 0.88rem; line-height: 1.9;
+        color: var(--text-muted); margin-bottom: 1.1rem;
+    }
+
+    /* Timeline */
+    .timeline { margin-top: 2.5rem; }
+    .timeline h3 {
+        font-family: 'Oswald', sans-serif; font-size: 1.1rem;
+        color: var(--text-primary); letter-spacing: 2px;
+        text-transform: uppercase; margin-bottom: 1.5rem;
+        display: flex; align-items: center; gap: 0.6rem;
+    }
+    .timeline h3 i { color: var(--primary); }
+
+    .tl-item {
+        display: flex; gap: 1rem;
+        margin-bottom: 1.5rem; position: relative;
+        padding-left: 0.5rem;
+    }
+    .tl-dot {
+        width: 12px; height: 12px;
+        border-radius: 50%; background: var(--primary);
+        border: 2px solid var(--accent);
+        flex-shrink: 0; margin-top: 4px;
+        box-shadow: 0 0 8px var(--primary-glow);
+    }
+    .tl-line {
+        position: absolute; left: 10px; top: 16px;
+        bottom: -24px; width: 1px;
+        background: linear-gradient(to bottom, var(--primary), transparent);
+    }
+    .tl-body { flex: 1; }
+    .tl-body h4 {
+        font-size: 0.88rem; font-weight: 600;
+        color: var(--text-primary); margin-bottom: 0.15rem;
+    }
+    .tl-body .tl-meta {
+        font-size: 0.72rem; color: var(--primary);
+        margin-bottom: 0.3rem;
+    }
+    .tl-body p {
+        font-size: 0.78rem; color: var(--text-muted);
+        line-height: 1.7; margin: 0;
+    }
+
+    @media (max-width: 768px) {
+        .about-grid { grid-template-columns: 1fr; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="about-section">
+    <div class="page-hero fade-up fade-up-d1">
+        <div class="eyebrow">Who am I</div>
+        <h1>About Me</h1>
+        <div class="divider"></div>
+    </div>
+
+    <div class="about-grid">
+        <!-- LEFT -->
+        <div class="about-profile fade-up fade-up-d2">
+            <div class="profile-avatar">KM</div>
+            <div class="profile-name">MINE RUA</div>
+            <div class="profile-title">Data Analyst</div>
+
+            <div class="contact-links">
+                <a href="mailto:your@email.com" class="contact-link">
+                    <i class="fas fa-envelope"></i> your@email.com
+                </a>
+                <a href="https://github.com/" class="contact-link" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="https://linkedin.com/" class="contact-link" target="_blank">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+                <a href="#" class="contact-link">
+                    <i class="fas fa-map-marker-alt"></i> Vietnam
+                </a>
+            </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="about-bio fade-up fade-up-d3">
+            <h2>Hello, I'm Nguyen Dat</h2>
+            <div class="underline"></div>
+            <p>
+                I'm an analytics engineer and developer with a passion for turning complex datasets into clear, actionable insights.
+                With experience spanning data engineering, business analysis, and full-stack development,
+                I bridge the gap between raw data and business decisions.
+            </p>
+            <p>
+                My journey started with data analysis and evolved into building complete data pipelines —
+                from ingestion to visualization. I enjoy every layer of the stack, from writing SQL queries
+                to deploying applications on AWS.
+            </p>
+            <p>
+                When I'm not working with data, I'm continuously learning — whether through online courses,
+                building side projects, or exploring new tools in the data ecosystem.
+            </p>
+
+            <!-- Timeline -->
+            <div class="timeline">
+                <h3><i class="fas fa-history"></i> Experience</h3>
+
+                <div class="tl-item">
+                    <div>
+                        <div class="tl-dot"></div>
+                        <div class="tl-line"></div>
+                    </div>
+                    <div class="tl-body">
+                        <h4>Data Analyst</h4>
+                        <div class="tl-meta">Company Name · 2023 – Present</div>
+                        <p>Responsible for building dashboards, data pipelines, and analytical reports to support business decisions.</p>
+                    </div>
+                </div>
+
+                <div class="tl-item">
+                    <div>
+                        <div class="tl-dot"></div>
+                        <div class="tl-line"></div>
+                    </div>
+                    <div class="tl-body">
+                        <h4>Analytics Engineer Intern</h4>
+                        <div class="tl-meta">Colgate - Palmolive Vietnam · 4/2024 – 11/2024</div>
+                        <p>Gathered business requirements, conducted data analysis, and created reports for stakeholders.</p>
+                    </div>
+                </div>
+
+                <div class="tl-item">
+                    <div><div class="tl-dot"></div></div>
+                    <div class="tl-body">
+                        <h4>Bachelor's Degree</h4>
+                        <div class="tl-meta">University Name · 2019 – 2023</div>
+                        <p>Graduated with a focus on Information Systems and Data Analytics.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

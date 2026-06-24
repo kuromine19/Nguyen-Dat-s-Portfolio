@@ -1,0 +1,238 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Blog{% endblock %}
+
+{% block extra_head %}
+<style>
+    .blog-section {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 4rem 2rem;
+    }
+
+    /* Filter tabs */
+    .blog-filters {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 2.5rem;
+    }
+    .filter-btn {
+        padding: 0.4rem 1.1rem;
+        background: transparent;
+        border: 1px solid var(--surface-border);
+        border-radius: 50px;
+        color: var(--text-muted);
+        font-size: 0.75rem;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.25s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+        background: rgba(14,131,136,0.15);
+        border-color: var(--primary);
+        color: var(--accent);
+    }
+
+    /* Blog grid */
+    .blog-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .blog-card {
+        display: flex;
+        flex-direction: column;
+        text-decoration: none;
+        overflow: hidden;
+    }
+    .blog-card-img {
+        height: 180px;
+        background: linear-gradient(135deg, rgba(14,131,136,0.2), rgba(43,228,240,0.05));
+        border-bottom: 1px solid var(--surface-border);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 3rem;
+        position: relative;
+        overflow: hidden;
+    }
+    .blog-card-img::after {
+        content: '';
+        position: absolute; inset: 0;
+        background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.3));
+    }
+    .blog-card-body { padding: 1.4rem; flex: 1; display: flex; flex-direction: column; }
+    .blog-meta {
+        display: flex; align-items: center; gap: 0.8rem;
+        margin-bottom: 0.7rem;
+    }
+    .blog-cat {
+        font-size: 0.62rem; letter-spacing: 2px; text-transform: uppercase;
+        color: var(--primary); font-weight: 600;
+    }
+    .blog-date {
+        font-size: 0.68rem; color: var(--text-muted);
+        display: flex; align-items: center; gap: 0.3rem;
+    }
+    .blog-card h3 {
+        font-family: 'Oswald', sans-serif;
+        font-size: 1.05rem; font-weight: 500;
+        color: var(--text-primary); letter-spacing: 0.5px;
+        margin-bottom: 0.6rem;
+        line-height: 1.4;
+        transition: color 0.25s;
+    }
+    .blog-card:hover h3 { color: var(--accent); }
+    .blog-card p {
+        font-size: 0.78rem; color: var(--text-muted);
+        line-height: 1.7; flex: 1; margin-bottom: 1rem;
+    }
+    .blog-read-more {
+        font-size: 0.72rem; color: var(--primary);
+        display: flex; align-items: center; gap: 0.3rem;
+        font-weight: 600;
+        transition: gap 0.25s;
+    }
+    .blog-card:hover .blog-read-more { gap: 0.6rem; color: var(--accent); }
+
+    /* Featured post */
+    .featured-post {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+        overflow: hidden;
+        margin-bottom: 0.5rem;
+    }
+    .featured-post .blog-card-img { height: 100%; min-height: 220px; }
+    .featured-tag {
+        position: absolute; top: 1rem; left: 1rem;
+        padding: 0.3rem 0.8rem;
+        background: var(--primary); color: #fff;
+        font-size: 0.62rem; letter-spacing: 2px;
+        text-transform: uppercase; border-radius: 4px;
+        z-index: 1; font-weight: 600;
+    }
+    .featured-post .blog-card-body { padding: 2rem; }
+    .featured-post h3 { font-size: 1.4rem; }
+
+    @media (max-width: 700px) {
+        .featured-post { grid-template-columns: 1fr; }
+        .featured-post .blog-card-img { height: 160px; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="blog-section">
+    <div class="page-hero fade-up fade-up-d1">
+        <div class="eyebrow">Thoughts &amp; learnings</div>
+        <h1>Blog</h1>
+        <div class="divider"></div>
+        <p>I write about data engineering, analytics, and lessons learned along the way.</p>
+    </div>
+
+    <!-- Filters -->
+    <div class="blog-filters fade-up fade-up-d2">
+        <button class="filter-btn active">All</button>
+        <button class="filter-btn">Data Engineering</button>
+        <button class="filter-btn">Analytics</button>
+        <button class="filter-btn">Python</button>
+        <button class="filter-btn">SQL</button>
+        <button class="filter-btn">Career</button>
+    </div>
+
+    <!-- Posts -->
+    {% if posts %}
+    <div class="blog-grid fade-up fade-up-d3">
+        {% for post in posts %}
+        <a href="/blog/{{ post.slug }}" class="glass-card blog-card">
+            <div class="blog-card-img">📊</div>
+            <div class="blog-card-body">
+                <div class="blog-meta">
+                    <span class="blog-cat">{{ post.category }}</span>
+                    <span class="blog-date"><i class="fas fa-calendar-alt"></i> {{ post.date }}</span>
+                </div>
+                <h3>{{ post.title }}</h3>
+                <p>{{ post.excerpt }}</p>
+                <span class="blog-read-more">Read more <i class="fas fa-arrow-right"></i></span>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <!-- Sample static posts -->
+    <div class="blog-grid fade-up fade-up-d3">
+        <a href="#" class="glass-card blog-card featured-post">
+            <div class="blog-card-img" style="font-size:4rem;">
+                <span class="featured-tag">Featured</span>
+                🔧
+            </div>
+            <div class="blog-card-body">
+                <div class="blog-meta">
+                    <span class="blog-cat">Data Engineering</span>
+                    <span class="blog-date"><i class="fas fa-calendar-alt"></i> Aug 2023</span>
+                </div>
+                <h3>Building a Full Data Pipeline with dbt and Airflow on AWS</h3>
+                <p>
+                    A step-by-step walkthrough of how I built an end-to-end data pipeline from ingestion to visualization using
+                    PostgreSQL, dbt for transformation, and Apache Airflow for orchestration — all self-hosted on AWS EC2.
+                </p>
+                <span class="blog-read-more">Read more <i class="fas fa-arrow-right"></i></span>
+            </div>
+        </a>
+
+        <a href="#" class="glass-card blog-card">
+            <div class="blog-card-img">🐍</div>
+            <div class="blog-card-body">
+                <div class="blog-meta">
+                    <span class="blog-cat">Python</span>
+                    <span class="blog-date"><i class="fas fa-calendar-alt"></i> Jul 2023</span>
+                </div>
+                <h3>5 Pandas Tricks Every Data Analyst Should Know</h3>
+                <p>Boost your data wrangling efficiency with these underutilized pandas functions and patterns.</p>
+                <span class="blog-read-more">Read more <i class="fas fa-arrow-right"></i></span>
+            </div>
+        </a>
+
+        <a href="#" class="glass-card blog-card">
+            <div class="blog-card-img">📊</div>
+            <div class="blog-card-body">
+                <div class="blog-meta">
+                    <span class="blog-cat">Analytics</span>
+                    <span class="blog-date"><i class="fas fa-calendar-alt"></i> Jun 2023</span>
+                </div>
+                <h3>From Business Analyst to Data Engineer: My Journey</h3>
+                <p>How I transitioned from business analysis into data engineering and the skills that bridged the gap.</p>
+                <span class="blog-read-more">Read more <i class="fas fa-arrow-right"></i></span>
+            </div>
+        </a>
+
+        <a href="#" class="glass-card blog-card">
+            <div class="blog-card-img">🗄️</div>
+            <div class="blog-card-body">
+                <div class="blog-meta">
+                    <span class="blog-cat">SQL</span>
+                    <span class="blog-date"><i class="fas fa-calendar-alt"></i> May 2023</span>
+                </div>
+                <h3>Window Functions in SQL: A Practical Guide</h3>
+                <p>Mastering ROW_NUMBER, LAG, LEAD, and partition-based analytics with real-world examples.</p>
+                <span class="blog-read-more">Read more <i class="fas fa-arrow-right"></i></span>
+            </div>
+        </a>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        });
+    });
+</script>
+{% endblock %}

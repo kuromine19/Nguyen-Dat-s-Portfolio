@@ -1,0 +1,529 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Dashboard{% endblock %}
+
+{% block extra_head %}
+<style>
+    /* ─── LAYOUT ─── */
+    .dashboard-layout {
+        display: flex;
+        min-height: calc(100vh - 70px);
+    }
+
+    /* ─── SIDEBAR ─── */
+    .dash-sidebar {
+        width: 220px;
+        min-width: 220px;
+        position: sticky;
+        top: 70px;
+        height: calc(100vh - 70px);
+        border-right: 1px solid var(--surface-border);
+        background: rgba(6, 11, 16, 0.55);
+        backdrop-filter: blur(16px);
+        padding: 2rem 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        z-index: 100;
+    }
+
+    .dash-sidebar-title {
+        padding: 0 1.5rem 1.5rem;
+        border-bottom: 1px solid var(--surface-border);
+        margin-bottom: 1rem;
+    }
+    .dash-sidebar-title .label-sm {
+        font-size: 0.6rem;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: var(--text-muted);
+    }
+    .dash-sidebar-title h2 {
+        font-family: 'Oswald', sans-serif;
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--primary);
+        text-shadow: 0 0 12px var(--primary-glow);
+        letter-spacing: 2px;
+        margin-top: 0.2rem;
+    }
+
+    .dash-nav-link {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1.5rem;
+        color: var(--text-muted);
+        text-decoration: none;
+        font-size: 0.8rem;
+        font-weight: 500;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        transition: all 0.25s;
+        border-left: 3px solid transparent;
+    }
+    .dash-nav-link i {
+        width: 18px;
+        text-align: center;
+        font-size: 0.85rem;
+    }
+    .dash-nav-link:hover,
+    .dash-nav-link.active {
+        color: var(--accent);
+        background: rgba(14,131,136,0.1);
+        border-left-color: var(--primary);
+    }
+
+    /* ─── CONTENT ─── */
+    .dash-content {
+        flex: 1;
+        padding: 3rem 2.5rem;
+        max-width: 1000px;
+        overflow-x: hidden;
+    }
+
+    /* Section header */
+    .section-header {
+        margin-bottom: 2.5rem;
+    }
+    .section-header .eyebrow {
+        font-size: 0.65rem;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: var(--primary);
+        margin-bottom: 0.4rem;
+    }
+    .section-header h2 {
+        font-family: 'Oswald', sans-serif;
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        letter-spacing: 1px;
+    }
+    .section-header .underline {
+        width: 50px; height: 3px;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        border-radius: 2px;
+        margin-top: 0.8rem;
+    }
+
+    /* ─── SKILLS SECTION ─── */
+    .skills-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 4rem;
+    }
+
+    .skill-card {
+        padding: 2rem;
+    }
+    .skill-card h3 {
+        font-family: 'Oswald', sans-serif;
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: var(--text-primary);
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 1.8rem;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+    }
+    .skill-card h3 i { color: var(--primary); }
+
+    .skill-item {
+        margin-bottom: 1.3rem;
+    }
+    .skill-item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+    .skill-item-header .name {
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--text-primary);
+    }
+    .skill-item-header .pct {
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--primary);
+        font-family: 'Oswald', sans-serif;
+    }
+    .skill-bar-track {
+        height: 6px;
+        background: rgba(255,255,255,0.08);
+        border-radius: 6px;
+        overflow: hidden;
+    }
+    .skill-bar-fill {
+        height: 100%;
+        border-radius: 6px;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        width: 0;
+        transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+    }
+    .skill-bar-fill::after {
+        content: '';
+        position: absolute;
+        right: 0; top: 0; bottom: 0;
+        width: 8px;
+        background: var(--accent);
+        border-radius: 50%;
+        box-shadow: 0 0 6px var(--accent);
+    }
+
+    /* Soft skills bubbles */
+    .soft-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+    }
+    .soft-item {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        padding: 0.6rem 0.8rem;
+        background: rgba(14,131,136,0.06);
+        border: 1px solid rgba(14,131,136,0.15);
+        border-radius: 8px;
+        transition: all 0.25s;
+    }
+    .soft-item:hover { border-color: var(--primary); color: var(--text-primary); }
+    .soft-item i { color: var(--primary); font-size: 0.75rem; }
+
+    /* ─── PROJECTS ─── */
+    .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.2rem;
+        margin-bottom: 4rem;
+    }
+
+    .project-card {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+    }
+    .project-tag {
+        display: inline-block;
+        padding: 0.2rem 0.7rem;
+        background: rgba(14,131,136,0.15);
+        border: 1px solid rgba(14,131,136,0.3);
+        border-radius: 50px;
+        font-size: 0.65rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--primary);
+        margin-bottom: 0.8rem;
+    }
+    .project-card h4 {
+        font-family: 'Oswald', sans-serif;
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--text-primary);
+        margin-bottom: 0.6rem;
+        letter-spacing: 0.5px;
+    }
+    .project-card p {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        line-height: 1.65;
+        flex: 1;
+        margin-bottom: 1rem;
+    }
+    .project-stack {
+        display: flex;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+    }
+    .stack-chip {
+        padding: 0.15rem 0.55rem;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 4px;
+        font-size: 0.65rem;
+        color: var(--text-muted);
+    }
+    .project-links {
+        display: flex;
+        gap: 0.6rem;
+    }
+    .project-link {
+        font-size: 0.72rem;
+        color: var(--primary);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        transition: color 0.25s;
+    }
+    .project-link:hover { color: var(--accent); }
+
+    /* ─── CERTIFICATIONS ─── */
+    .cert-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 4rem;
+    }
+    .cert-card {
+        padding: 1.2rem 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+    }
+    .cert-icon {
+        width: 46px; height: 46px;
+        border-radius: 10px;
+        background: rgba(14,131,136,0.15);
+        border: 1px solid rgba(14,131,136,0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: var(--primary);
+        flex-shrink: 0;
+    }
+    .cert-info { flex: 1; }
+    .cert-info h4 {
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.2rem;
+    }
+    .cert-info p {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+    }
+    .cert-date {
+        font-size: 0.72rem;
+        color: var(--primary);
+        font-family: 'Oswald', sans-serif;
+        letter-spacing: 1px;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+        .skills-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+        .dash-sidebar { display: none; }
+        .dash-content { padding: 2rem 1rem; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="dash-sidebar">
+        <div class="dash-sidebar-title">
+            <div class="label-sm">KM's</div>
+            <h2>DASHBOARD</h2>
+        </div>
+        <a href="#skills"   class="dash-nav-link active"><i class="fas fa-code"></i> Skills</a>
+        <a href="#projects" class="dash-nav-link"><i class="fas fa-folder-open"></i> Projects</a>
+        <a href="#certs"    class="dash-nav-link"><i class="fas fa-certificate"></i> Certifications</a>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="dash-content">
+
+        <!-- ── SKILLS ── -->
+        <section id="skills" class="fade-up fade-up-d1">
+            <div class="section-header">
+                <div class="eyebrow">What I can do</div>
+                <h2>Skills</h2>
+                <div class="underline"></div>
+            </div>
+
+            <div class="skills-grid">
+                <!-- Technical -->
+                <div class="glass-card skill-card">
+                    <h3><i class="fas fa-laptop-code"></i> Technical Skills</h3>
+
+                    <div class="skill-item">
+                        <div class="skill-item-header"><span class="name">Python</span><span class="pct">70%</span></div>
+                        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="70"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-item-header"><span class="name">R</span><span class="pct">75%</span></div>
+                        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="75"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-item-header"><span class="name">SQL &amp; NoSQL</span><span class="pct">75%</span></div>
+                        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="75"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-item-header"><span class="name">Tableau</span><span class="pct">75%</span></div>
+                        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="75"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-item-header"><span class="name">dbt</span><span class="pct">65%</span></div>
+                        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="65"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-item-header"><span class="name">Apache Airflow</span><span class="pct">60%</span></div>
+                        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="60"></div></div>
+                    </div>
+                </div>
+
+                <!-- Professional -->
+                <div class="glass-card skill-card">
+                    <h3><i class="fas fa-user-tie"></i> Professional Skills</h3>
+                    <div class="soft-grid">
+                        <div class="soft-item"><i class="fas fa-check-circle"></i> Data Analysis</div>
+                        <div class="soft-item"><i class="fas fa-check-circle"></i> Problem Solving</div>
+                        <div class="soft-item"><i class="fas fa-check-circle"></i> Communication</div>
+                        <div class="soft-item"><i class="fas fa-check-circle"></i> Team Collaboration</div>
+                        <div class="soft-item"><i class="fas fa-check-circle"></i> Critical Thinking</div>
+                        <div class="soft-item"><i class="fas fa-check-circle"></i> Project Management</div>
+                        <div class="soft-item"><i class="fas fa-check-circle"></i> Business Acumen</div>
+                        <div class="soft-item"><i class="fas fa-check-circle"></i> Continuous Learning</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── PROJECTS ── -->
+        <section id="projects" class="fade-up fade-up-d2">
+            <div class="section-header">
+                <div class="eyebrow">What I've built</div>
+                <h2>Projects</h2>
+                <div class="underline"></div>
+            </div>
+
+            <div class="projects-grid">
+                <div class="glass-card project-card">
+                    <span class="project-tag">Data Engineering</span>
+                    <h4>E-Commerce Data Pipeline</h4>
+                    <p>End-to-end data pipeline for a Vietnamese coffee shop using PostgreSQL, dbt, and Apache Airflow for automated reporting.</p>
+                    <div class="project-stack">
+                        <span class="stack-chip">Python</span>
+                        <span class="stack-chip">PostgreSQL</span>
+                        <span class="stack-chip">dbt</span>
+                        <span class="stack-chip">Airflow</span>
+                        <span class="stack-chip">AWS EC2</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link"><i class="fab fa-github"></i> Code</a>
+                        <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Demo</a>
+                    </div>
+                </div>
+
+                <div class="glass-card project-card">
+                    <span class="project-tag">Web App</span>
+                    <h4>Personal Portfolio</h4>
+                    <p>Full-stack Django web application with admin dashboard, data analytics layer, and automated deployment on AWS.</p>
+                    <div class="project-stack">
+                        <span class="stack-chip">Django</span>
+                        <span class="stack-chip">PostgreSQL</span>
+                        <span class="stack-chip">AWS</span>
+                        <span class="stack-chip">Bootstrap</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link"><i class="fab fa-github"></i> Code</a>
+                    </div>
+                </div>
+
+                <div class="glass-card project-card">
+                    <span class="project-tag">Data Analysis</span>
+                    <h4>Market Analysis Dashboard</h4>
+                    <p>Interactive Tableau dashboard analyzing market trends with automated data refresh from multiple data sources.</p>
+                    <div class="project-stack">
+                        <span class="stack-chip">Tableau</span>
+                        <span class="stack-chip">SQL</span>
+                        <span class="stack-chip">Python</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> View</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── CERTIFICATIONS ── -->
+        <section id="certs" class="fade-up fade-up-d3">
+            <div class="section-header">
+                <div class="eyebrow">Credentials</div>
+                <h2>Certifications</h2>
+                <div class="underline"></div>
+            </div>
+
+            <div class="cert-list">
+                <div class="glass-card cert-card">
+                    <div class="cert-icon"><i class="fas fa-database"></i></div>
+                    <div class="cert-info">
+                        <h4>Google Data Analytics Certificate</h4>
+                        <p>Google · Coursera</p>
+                    </div>
+                    <div class="cert-date">2023</div>
+                </div>
+                <div class="glass-card cert-card">
+                    <div class="cert-icon"><i class="fab fa-python"></i></div>
+                    <div class="cert-info">
+                        <h4>Python for Data Science</h4>
+                        <p>IBM · Coursera</p>
+                    </div>
+                    <div class="cert-date">2023</div>
+                </div>
+                <div class="glass-card cert-card">
+                    <div class="cert-icon"><i class="fas fa-chart-bar"></i></div>
+                    <div class="cert-info">
+                        <h4>Tableau Desktop Specialist</h4>
+                        <p>Tableau</p>
+                    </div>
+                    <div class="cert-date">2022</div>
+                </div>
+                <div class="glass-card cert-card">
+                    <div class="cert-icon"><i class="fas fa-language"></i></div>
+                    <div class="cert-info">
+                        <h4>IELTS Academic</h4>
+                        <p>British Council · Band 7.0</p>
+                    </div>
+                    <div class="cert-date">2022</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Animate skill bars when visible
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+                    bar.style.width = bar.dataset.width + '%';
+                });
+            }
+        });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.skill-card').forEach(card => observer.observe(card));
+
+    // Smooth scroll sidebar links
+    document.querySelectorAll('.dash-nav-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            const href = link.getAttribute('href');
+            if (href.startsWith('#')) {
+                e.preventDefault();
+                document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                document.querySelectorAll('.dash-nav-link').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            }
+        });
+    });
+</script>
+{% endblock %}
