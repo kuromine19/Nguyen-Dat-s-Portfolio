@@ -7,7 +7,7 @@ For more information on this file, see
 https://docs.djangoproject.com/en/4.2/topics/settings/
 
 For the full list of settings and their values, see
-https://docs.djangoproject.com/en/4.2/ref/settings/
+nano ~/mine_portfolio/portfolio/settings.pyhttps://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
@@ -26,7 +26,12 @@ SECRET_KEY = "django-insecure-bj^iw&jqb(he!^(p4@#qutgappd*nx^-_8$b@w)-xp3j^%9@#1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['18.136.182.7',
+'nguyendatsportfolio.site',
+    'www.nguyendatsportfolio.site',
+    'localhost',
+    '127.0.0.1'
+]
 
 
 # Application definition
@@ -127,3 +132,5 @@ STATIC_ROOT=os.path.join(BASE_DIR,'staticfiles')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
