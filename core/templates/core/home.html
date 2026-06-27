@@ -1,7 +1,6 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block title %}Home{% endblock %}
-
 {% block extra_head %}
 <style>
     /* ─── HERO SECTION ─── */
@@ -84,6 +83,7 @@
 
     .hero-cta {
         display: flex;
+	flex-direction: row; 
         gap: 1rem;
         flex-wrap: wrap;
     }
@@ -298,7 +298,16 @@
                 <a href="/contact" class="btn-ghost-custom">
                     <i class="fas fa-envelope"></i> Get in Touch
                 </a>
-            </div>
+     
+    <!-- Thêm nút này -->
+    <a href="{% static 'files/DataEngineer_NguyenThanhDat.pdf' %}" 
+       class="btn-ghost-custom" 
+       target="_blank"
+       download>
+        <i class="fas fa-file-pdf"></i> View CV
+    </a>
+</div>
+</div>
             <div class="hero-stats fade-up fade-up-d4">
                 <div class="stat-item">
                     <div class="stat-number">2+</div>
