@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: nguyen-dat-portfolio
+    runtime: python
+    plan: free
+    region: singapore
+    buildCommand: ./build.sh
+    startCommand: gunicorn portfolio.wsgi:application
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: "False"

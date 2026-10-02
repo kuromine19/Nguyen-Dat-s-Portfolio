@@ -7,7 +7,7 @@ For more information on this file, see
 https://docs.djangoproject.com/en/4.2/topics/settings/
 
 For the full list of settings and their values, see
-nano ~/mine_portfolio/portfolio/settings.pyhttps://docs.djangoproject.com/en/4.2/ref/settings/
+https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
@@ -20,18 +20,44 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
+def env_list(name, default=""):
+    return [item.strip() for item in os.environ.get(name, default).split(",") if item.strip()]
+
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-bj^iw&jqb(he!^(p4@#qutgappd*nx^-_8$b@w)-xp3j^%9@#1"
+# In production, set DJANGO_SECRET_KEY in the environment (Render generates it, see render.yaml).
+SECRET_KEY = os.environ.get(
+    "DJANGO_SECRET_KEY",
+    "django-insecure-bj^iw&jqb(he!^(p4@#qutgappd*nx^-_8$b@w)-xp3j^%9@#1",
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DJANGO_DEBUG", "True").lower() in ("1", "true", "yes")
 
-ALLOWED_HOSTS = ['18.136.182.7',
-'nguyendatsportfolio.site',
-    'www.nguyendatsportfolio.site',
-    'localhost',
-    '127.0.0.1'
-]
+ALLOWED_HOSTS = env_list(
+    "DJANGO_ALLOWED_HOSTS",
+    "nguyendatsportfolio.site,www.nguyendatsportfolio.site,localhost,127.0.0.1",
+)
+
+# Render exposes the service's *.onrender.com hostname in this variable.
+RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
+CSRF_TRUSTED_ORIGINS = env_list(
+    "DJANGO_CSRF_TRUSTED_ORIGINS",
+    "https://nguyendatsportfolio.site,https://www.nguyendatsportfolio.site",
+)
+if RENDER_EXTERNAL_HOSTNAME:
+    CSRF_TRUSTED_ORIGINS.append(f"https://{RENDER_EXTERNAL_HOSTNAME}")
+
+if not DEBUG:
+    # Render (and Cloudflare) terminate HTTPS and forward X-Forwarded-Proto.
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_REFERRER_POLICY = "same-origin"
 
 
 # Application definition
@@ -47,8 +73,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
