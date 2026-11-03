@@ -13,3 +13,5 @@ services:
         generateValue: true
       - key: DJANGO_DEBUG
         value: "False"
+      - key: WEB3FORMS_ACCESS_KEY
+        sync: false

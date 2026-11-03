@@ -253,7 +253,8 @@
     }
     .project-links {
         display: flex;
-        gap: 0.6rem;
+        flex-wrap: wrap;
+        gap: 0.4rem 0.9rem;
     }
     .project-link {
         font-size: 0.72rem;
@@ -301,6 +302,16 @@
     .project-featured .project-body { display: flex; flex-direction: column; height: 100%; }
     @media (max-width: 900px) {
         .project-featured { grid-template-columns: 1fr; }
+    }
+
+    .project-embed {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 8px;
+        background: #000;
+        margin-bottom: 1rem;
+        display: block;
     }
 
     /* ─── TECH STACK ─── */
@@ -579,6 +590,8 @@
 
                 <div class="glass-card project-card">
                     <span class="project-tag">Data Engineering</span>
+                    <iframe class="project-embed" src="https://www.youtube-nocookie.com/embed/pkUlGwkxwb4" title="Most-played Games Dashboard demo"
+                            loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>
                     <h4>Most-played Games Dashboard</h4>
                     <div class="project-date">10/2023 – 12/2023</div>
                     <p>Fully automated pipeline crawling Steam gameplay statistics into MongoDB Atlas, served via Django APIs and visualized with Chart.js.</p>
@@ -593,6 +606,7 @@
                     <div class="project-links">
                         <a href="https://bom.so/06TsQy" class="project-link" target="_blank" rel="noopener"><i class="fas fa-code"></i> Source</a>
                         <a href="https://bom.so/hRPz3G" class="project-link" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Demo</a>
+                        <a href="https://youtu.be/pkUlGwkxwb4" class="project-link" target="_blank" rel="noopener"><i class="fab fa-youtube"></i> Video</a>
                     </div>
                 </div>
 
@@ -615,17 +629,22 @@
 
                 <div class="glass-card project-card">
                     <span class="project-tag">Data Engineering</span>
+                    <iframe class="project-embed" src="https://www.youtube-nocookie.com/embed/TYrmBoEgd6I" title="RANG Shop WebApp demo"
+                            loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>
                     <h4>E-Commerce Data Pipeline - RANG Shop</h4>
-                    <p>End-to-end data pipeline for a Vietnamese coffee shop using PostgreSQL, dbt, and Apache Airflow for automated reporting.</p>
+                    <p>End-to-end data pipeline for a Vietnamese coffee &amp; tea shop: a Node.js web app generates orders and behavior events, then PostgreSQL, dbt, and Apache Airflow turn them into automated reporting.</p>
                     <div class="project-stack">
                         <span class="stack-chip">Python</span>
                         <span class="stack-chip">PostgreSQL</span>
                         <span class="stack-chip">dbt</span>
                         <span class="stack-chip">Airflow</span>
                         <span class="stack-chip">AWS EC2</span>
+                        <span class="stack-chip">Node.js</span>
                     </div>
                     <div class="project-links">
-                        <a href="https://github.com/kuromine19/RANG-Shop-Data" class="project-link"><i class="fab fa-github"></i> Code</a>
+                        <a href="https://github.com/kuromine19/RANG-Shop-Data" class="project-link" target="_blank" rel="noopener"><i class="fab fa-github"></i> Pipeline Code</a>
+                        <a href="https://github.com/kuromine19/RANG-Shop-WebApp" class="project-link" target="_blank" rel="noopener"><i class="fab fa-github"></i> Web App Code</a>
+                        <a href="https://youtu.be/TYrmBoEgd6I" class="project-link" target="_blank" rel="noopener"><i class="fab fa-youtube"></i> Demo</a>
                     </div>
                 </div>
 

@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from django.contrib import messages
+from django.conf import settings
+from django.shortcuts import render
 
 
 def home(request):
@@ -38,21 +38,9 @@ def blog(request):
 
 
 def contact(request):
-    """Contact page with form"""
-    if request.method == 'POST':
-        name    = request.POST.get('name', '').strip()
-        email   = request.POST.get('email', '').strip()
-        subject = request.POST.get('subject', '').strip()
-        message = request.POST.get('message', '').strip()
-
-        # TODO: save to DB or send email
-        # Example: Contact.objects.create(name=name, email=email, subject=subject, message=message)
-        # Or: send_mail(subject, message, email, ['your@email.com'])
-
-        messages.success(request, 'Message sent successfully! I will get back to you soon.')
-        return redirect('/contact')
-
+    """Contact page; the form posts to Web3Forms (see WEB3FORMS_ACCESS_KEY)."""
     context = {
         'navbar': 'contact',
+        'web3forms_access_key': settings.WEB3FORMS_ACCESS_KEY,
     }
     return render(request, 'core/contact.html', context)

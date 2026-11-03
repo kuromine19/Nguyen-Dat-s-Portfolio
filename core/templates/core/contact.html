@@ -136,6 +136,13 @@
         color: var(--accent);
         margin-top: 1rem;
     }
+    .success-msg.is-error {
+        background: rgba(232,93,117,0.12);
+        border-color: #e85d75;
+        color: #f2a0ae;
+    }
+    .submit-btn:disabled { opacity: 0.6; cursor: wait; }
+    .form-honeypot { display: none; }
 
     @media (max-width: 768px) {
         .contact-grid { grid-template-columns: 1fr; }
@@ -190,8 +197,11 @@
         <!-- FORM -->
         <div class="glass-card contact-form fade-up fade-up-d3">
             <h3>Send a Message</h3>
-            <form method="POST" action="/contact/" id="contactForm">
-                {% csrf_token %}
+            {% if web3forms_access_key %}
+            <form method="POST" action="https://api.web3forms.com/submit" id="contactForm">
+                <input type="hidden" name="access_key" value="{{ web3forms_access_key }}">
+                <input type="hidden" name="from_name" value="Portfolio contact form">
+                <input type="checkbox" name="botcheck" class="form-honeypot" tabindex="-1" autocomplete="off">
                 <div class="form-row">
                     <div class="form-group">
                         <label>Name</label>
@@ -213,10 +223,14 @@
                 <button type="submit" class="submit-btn">
                     <i class="fas fa-paper-plane"></i> Send Message
                 </button>
-                <div class="success-msg" id="successMsg">
-                    <i class="fas fa-check-circle"></i> Message sent! I'll get back to you soon.
-                </div>
+                <div class="success-msg" id="successMsg" role="status" aria-live="polite"></div>
             </form>
+            {% else %}
+            <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.8;">
+                The contact form is not set up yet. Please email me at
+                <a href="mailto:nguyendat19222002@gmail.com">nguyendat19222002@gmail.com</a>.
+            </p>
+            {% endif %}
         </div>
     </div>
 </section>
@@ -224,9 +238,36 @@
 
 {% block extra_js %}
 <script>
-    document.getElementById('contactForm').addEventListener('submit', function(e) {
-        // You can remove this to let Django handle it normally
-        // This is just a demo effect
-    });
+    const form = document.getElementById('contactForm');
+    if (form) {
+        const msg = document.getElementById('successMsg');
+        const btn = form.querySelector('.submit-btn');
+        const show = (text, isError) => {
+            msg.textContent = text;
+            msg.classList.toggle('is-error', isError);
+            msg.style.display = 'block';
+        };
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            btn.disabled = true;
+            msg.style.display = 'none';
+            try {
+                const res = await fetch(form.action, {
+                    method: 'POST',
+                    headers: { 'Accept': 'application/json' },
+                    body: new FormData(form),
+                });
+                const data = await res.json();
+                if (!res.ok || !data.success) throw new Error(data.message || 'Request failed');
+                form.reset();
+                show("Message sent! I'll get back to you soon.", false);
+            } catch (err) {
+                show('Sorry, the message could not be sent. Please email me at nguyendat19222002@gmail.com.', true);
+            } finally {
+                btn.disabled = false;
+            }
+        });
+    }
 </script>
 {% endblock %}
