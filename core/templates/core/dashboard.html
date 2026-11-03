@@ -423,6 +423,11 @@
         .dash-sidebar { display: none; }
         .dash-content { padding: 2rem 1rem; }
     }
+
+    /* Large screens: wider content, centred in the space next to the sidebar */
+    @media (min-width: 1400px) {
+        .dash-content { max-width: 1320px; margin: 0 auto; }
+    }
 </style>
 {% endblock %}
 

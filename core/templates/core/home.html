@@ -274,6 +274,14 @@
         .avatar-ring { width: 200px; height: 200px; }
         .float-badge { display: none; }
     }
+
+    /* Large screens: use more of the width */
+    @media (min-width: 1400px) {
+        .hero-inner, .skills-strip { max-width: 1320px; }
+        .hero-bio { max-width: 560px; font-size: 1rem; }
+        .avatar-ring { width: 360px; height: 360px; }
+        .avatar-placeholder { font-size: 6rem; }
+    }
 </style>
 {% endblock %}
 
