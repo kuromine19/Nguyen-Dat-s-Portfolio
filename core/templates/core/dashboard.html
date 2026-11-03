@@ -107,6 +107,106 @@
         margin-top: 0.8rem;
     }
 
+    /* ─── OVERVIEW: shared ─── */
+    .overview-card { padding: 1.6rem 1.8rem; margin-bottom: 4rem; }
+    .overview-card:hover { transform: none; }
+    .overview-note { font-size: 0.75rem; color: var(--text-muted); margin: -1.2rem 0 1.6rem; }
+
+    /* ─── CAREER TIMELINE ─── */
+    .gantt-scroll { overflow-x: auto; }
+    .gantt { min-width: 620px; position: relative; }
+    .gantt-row {
+        display: grid;
+        grid-template-columns: 170px 1fr;
+        align-items: center;
+        min-height: 44px;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .gantt-label { padding-right: 1rem; line-height: 1.3; }
+    .gantt-label strong { display: block; font-size: 0.78rem; color: var(--text-primary); font-weight: 600; }
+    .gantt-label span { font-size: 0.66rem; color: var(--text-muted); }
+    .gantt-track { position: relative; height: 44px; }
+    .gantt-bar {
+        position: absolute; top: 50%; height: 12px; transform: translateY(-50%);
+        border-radius: 6px; background: var(--bar, var(--primary));
+        box-shadow: 0 0 14px color-mix(in srgb, var(--bar, #0E8388) 45%, transparent);
+    }
+    .gantt-bar.is-ongoing {
+        background: linear-gradient(90deg, var(--bar) 70%, color-mix(in srgb, var(--bar) 15%, transparent));
+    }
+    .gantt-bar .gantt-dates {
+        position: absolute; top: -17px; left: 0; white-space: nowrap;
+        font-size: 0.6rem; color: var(--text-muted); letter-spacing: 0.5px;
+    }
+    .gantt-bar.is-ongoing .gantt-dates { left: auto; right: 0; }
+    .gantt-axis { position: relative; height: 26px; margin-left: 170px; }
+    .gantt-tick {
+        position: absolute; bottom: 4px; transform: translateX(-50%);
+        font-size: 0.62rem; color: var(--text-muted); font-family: 'Oswald', sans-serif; letter-spacing: 1px;
+    }
+    .gantt-grid { position: absolute; inset: 26px 0 0 170px; pointer-events: none; }
+    .gantt-grid i { position: absolute; top: 0; bottom: 0; width: 1px; background: rgba(255,255,255,0.05); }
+    .gantt-grid i.is-now { background: none; border-left: 1px dashed var(--accent); opacity: 0.7; }
+    .gantt-tick.is-now { color: var(--accent); letter-spacing: 2px; }
+    .gantt-track.is-projects { height: 84px; }
+    .gantt-pin {
+        position: absolute; transform: translate(-50%, -50%);
+        width: 22px; height: 22px; border-radius: 50%;
+        background: #F1F5F9; color: #0b1620;
+        font-size: 0.66rem; font-weight: 700;
+        display: flex; align-items: center; justify-content: center;
+        border: 0; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .gantt-pin.lane-0, .gantt-span.lane-0 { top: 22%; }
+    .gantt-pin.lane-1, .gantt-span.lane-1 { top: 50%; }
+    .gantt-pin.lane-2, .gantt-span.lane-2 { top: 78%; }
+    .gantt-span {
+        position: absolute; height: 2px; transform: translateY(-50%);
+        background: rgba(241,245,249,0.35); border-radius: 1px;
+    }
+    .project-legend {
+        list-style: none; padding: 0; margin: 1.4rem 0 0;
+        display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 0.5rem 1.2rem;
+    }
+    .project-legend li {
+        display: flex; align-items: baseline; gap: 0.6rem;
+        font-size: 0.74rem; color: var(--text-primary); cursor: default;
+        padding: 0.25rem 0.4rem; border-radius: 6px; transition: background 0.2s;
+    }
+    .project-legend .num {
+        flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%;
+        background: #F1F5F9; color: #0b1620; font-size: 0.6rem; font-weight: 700;
+        display: inline-flex; align-items: center; justify-content: center;
+    }
+    .project-legend small { display: block; color: var(--text-muted); font-size: 0.64rem; }
+    .project-legend li.is-hot { background: rgba(43,228,240,0.08); }
+    .gantt-pin.is-hot { transform: translate(-50%, -50%) scale(1.25); box-shadow: 0 0 0 4px rgba(43,228,240,0.35); }
+
+    /* ─── HOW I WORK (pipeline diagram) ─── */
+    .flow-svg { width: 100%; height: auto; display: block; }
+    .flow-svg .line { fill: none; stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; }
+    .flow-svg .pulse {
+        fill: none; stroke: rgba(255,255,255,0.75); stroke-width: 2.5; stroke-linecap: round;
+        stroke-dasharray: 2 26; animation: flow 2.4s linear infinite;
+    }
+    @keyframes flow { to { stroke-dashoffset: -280; } }
+    @media (prefers-reduced-motion: reduce) { .flow-svg .pulse { animation: none; display: none; } }
+    .flow-svg .pill { fill: #F1F5F9; }
+    .flow-svg .dot { fill: #F1F5F9; }
+    .flow-svg .t-title { fill: #F1F5F9; font-size: 17px; font-weight: 600; font-family: 'Poppins', sans-serif; }
+    .flow-svg .t-sub { fill: rgba(203,228,222,0.75); font-size: 13px; font-family: 'Poppins', sans-serif; }
+    .flow-svg .t-note { fill: rgba(203,228,222,0.5); font-size: 12px; font-style: italic; font-family: 'Poppins', sans-serif; }
+    .flow-steps { display: none; list-style: none; padding: 0; margin: 0; }
+    .flow-steps li {
+        border-left: 4px solid var(--c); padding: 0.2rem 0 0.2rem 0.9rem; margin-bottom: 1rem;
+    }
+    .flow-steps strong { display: block; font-size: 0.85rem; color: var(--text-primary); }
+    .flow-steps span { font-size: 0.74rem; color: var(--text-muted); }
+    @media (max-width: 700px) {
+        .flow-svg { display: none; }
+        .flow-steps { display: block; }
+    }
+
     /* ─── SKILLS SECTION ─── */
     .skills-grid {
         display: grid;
@@ -407,13 +507,144 @@
             <div class="label-sm">KM's</div>
             <h2>DASHBOARD</h2>
         </div>
-        <a href="#skills"   class="dash-nav-link active"><i class="fas fa-code"></i> Skills</a>
+        <a href="#journey"  class="dash-nav-link active"><i class="fas fa-route"></i> Journey</a>
+        <a href="#workflow" class="dash-nav-link"><i class="fas fa-project-diagram"></i> How I Work</a>
+        <a href="#skills"   class="dash-nav-link"><i class="fas fa-code"></i> Skills</a>
         <a href="#projects" class="dash-nav-link"><i class="fas fa-folder-open"></i> Projects</a>
         <a href="#certs"    class="dash-nav-link"><i class="fas fa-certificate"></i> Certifications</a>
     </aside>
 
     <!-- CONTENT -->
     <main class="dash-content">
+
+        <!-- ── CAREER TIMELINE ── -->
+        <section id="journey" class="fade-up fade-up-d1">
+            <div class="section-header">
+                <div class="eyebrow">Where I've been</div>
+                <h2>Career Timeline</h2>
+                <div class="underline"></div>
+            </div>
+
+            <div class="glass-card overview-card">
+                <div class="gantt-scroll">
+                <div class="gantt" data-from="2020-09" data-to="2027-01">
+                    <div class="gantt-axis"></div>
+                    <div class="gantt-grid"></div>
+                    <div class="gantt-row">
+                        <div class="gantt-label"><strong>University of Science</strong><span>Computer Science · GPA 8.27</span></div>
+                        <div class="gantt-track">
+                            <div class="gantt-bar" style="--bar: #F2B13B" data-start="2020-10" data-end="2024-11"><span class="gantt-dates">10/2020 – 11/2024</span></div>
+                        </div>
+                    </div>
+                    <div class="gantt-row">
+                        <div class="gantt-label"><strong>Colgate-Palmolive</strong><span>Analytics Engineer Intern</span></div>
+                        <div class="gantt-track">
+                            <div class="gantt-bar" style="--bar: #E85D84" data-start="2024-04" data-end="2024-11"><span class="gantt-dates">4/2024 – 11/2024</span></div>
+                        </div>
+                    </div>
+                    <div class="gantt-row">
+                        <div class="gantt-label"><strong>Asia Commercial Bank</strong><span>Analytics Engineer</span></div>
+                        <div class="gantt-track">
+                            <div class="gantt-bar" style="--bar: #2BB3A3" data-start="2024-12" data-end="2026-07"><span class="gantt-dates">12/2024 – 7/2026</span></div>
+                        </div>
+                    </div>
+                    <div class="gantt-row">
+                        <div class="gantt-label"><strong>Con Cung</strong><span>Data Engineer</span></div>
+                        <div class="gantt-track">
+                            <div class="gantt-bar is-ongoing" style="--bar: #2BE4F0" data-start="2026-09" data-end="now"><span class="gantt-dates">9/2026 – Present</span></div>
+                        </div>
+                    </div>
+                    <div class="gantt-row">
+                        <div class="gantt-label"><strong>Projects</strong><span>Hover a number for details</span></div>
+                        <div class="gantt-track is-projects">
+                            <span class="gantt-span lane-0" data-start="2023-02" data-end="2023-04"></span>
+                            <button type="button" class="gantt-pin lane-0" data-id="1" data-at="2023-02" data-until="2023-04" title="Sentiment Analysis" aria-label="1. Sentiment Analysis">1</button>
+                            <span class="gantt-span lane-1" data-start="2023-10" data-end="2023-12"></span>
+                            <button type="button" class="gantt-pin lane-1" data-id="2" data-at="2023-10" data-until="2023-12" title="Most-played Games Dashboard" aria-label="2. Most-played Games Dashboard">2</button>
+                            <span class="gantt-span lane-0" data-start="2025-03" data-end="2025-07"></span>
+                            <button type="button" class="gantt-pin lane-0" data-id="3" data-at="2025-03" data-until="2025-07" title="HR Data Optimization" aria-label="3. HR Data Optimization">3</button>
+                            <span class="gantt-span lane-0" data-start="2026-02" data-end="2026-06"></span>
+                            <button type="button" class="gantt-pin lane-0" data-id="4" data-at="2026-02" data-until="2026-06" title="Employee Attrition Prediction Pipeline" aria-label="4. Employee Attrition Prediction Pipeline">4</button>
+                            <span class="gantt-span lane-1" data-start="2026-06" data-end="2026-06"></span>
+                            <button type="button" class="gantt-pin lane-1" data-id="5" data-at="2026-06" data-until="2026-06" title="Personal Portfolio" aria-label="5. Personal Portfolio">5</button>
+                            <span class="gantt-span lane-2" data-start="2026-06" data-end="2026-07"></span>
+                            <button type="button" class="gantt-pin lane-2" data-id="6" data-at="2026-06" data-until="2026-07" title="RANG Shop Data Pipeline" aria-label="6. RANG Shop Data Pipeline">6</button>
+                            <span class="gantt-span lane-0" data-start="2026-11" data-end="2026-11"></span>
+                            <button type="button" class="gantt-pin lane-0" data-id="7" data-at="2026-11" data-until="2026-11" title="Online Store Data Warehouse Pipeline" aria-label="7. Online Store Data Warehouse Pipeline">7</button>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <ol class="project-legend">
+                    <li data-id="1"><span class="num">1</span><span>Sentiment Analysis<small>2/2023 – 4/2023 · Personal project</small></span></li>
+                    <li data-id="2"><span class="num">2</span><span>Most-played Games Dashboard<small>10/2023 – 12/2023 · Personal project</small></span></li>
+                    <li data-id="3"><span class="num">3</span><span>HR Data Optimization<small>3/2025 – 7/2025 · At Asia Commercial Bank</small></span></li>
+                    <li data-id="4"><span class="num">4</span><span>Employee Attrition Prediction Pipeline<small>2/2026 – 6/2026 · At Asia Commercial Bank</small></span></li>
+                    <li data-id="5"><span class="num">5</span><span>Personal Portfolio<small>6/2026 · Personal project</small></span></li>
+                    <li data-id="6"><span class="num">6</span><span>RANG Shop Data Pipeline<small>6/2026 – 7/2026 · Personal project</small></span></li>
+                    <li data-id="7"><span class="num">7</span><span>Online Store Data Warehouse Pipeline<small>11/2026 · Personal project</small></span></li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ── HOW I WORK ── -->
+        <section id="workflow" class="fade-up fade-up-d1">
+            <div class="section-header">
+                <div class="eyebrow">How I work</div>
+                <h2>From Raw Data to Reports</h2>
+                <div class="underline"></div>
+            </div>
+
+            <div class="glass-card overview-card">
+                <svg class="flow-svg" viewBox="0 0 1000 300" role="img"
+                     aria-labelledby="flowTitle flowDesc">
+                    <title id="flowTitle">My data pipeline workflow</title>
+                    <desc id="flowDesc">Files, APIs and databases flow into Airflow-orchestrated Python and PySpark jobs, load into a data warehouse, and feed BI dashboards.</desc>
+
+                    <path class="line" stroke="#2BB3A3" d="M30,62 H190 L262,140 H900"/>
+                    <path class="line" stroke="#F2B13B" d="M30,150 H900"/>
+                    <path class="line" stroke="#E85D84" d="M30,238 H190 L262,160 H900"/>
+                    <path class="pulse" d="M30,62 H190 L262,140 H900"/>
+                    <path class="pulse" d="M30,150 H900" style="animation-delay:-0.8s"/>
+                    <path class="pulse" d="M30,238 H190 L262,160 H900" style="animation-delay:-1.6s"/>
+
+                    <circle class="dot" cx="30" cy="62" r="9"/>
+                    <circle class="dot" cx="30" cy="150" r="9"/>
+                    <circle class="dot" cx="30" cy="238" r="9"/>
+                    <text class="t-title" x="20" y="40">Files</text>
+                    <text class="t-sub" x="20" y="86">CSV, Excel, exports</text>
+                    <text class="t-title" x="20" y="128">APIs</text>
+                    <text class="t-sub" x="20" y="174">REST, Selenium</text>
+                    <text class="t-title" x="20" y="216">Databases</text>
+                    <text class="t-sub" x="20" y="262">Oracle, SQL Server, MongoDB</text>
+
+                    <rect class="pill" x="407" y="122" width="26" height="56" rx="13"/>
+                    <text class="t-title" x="420" y="104" text-anchor="middle">Airflow</text>
+                    <text class="t-sub" x="420" y="204" text-anchor="middle">Python · PySpark</text>
+                    <text class="t-sub" x="420" y="223" text-anchor="middle">Kafka · NiFi</text>
+                    <text class="t-note" x="420" y="246" text-anchor="middle">scheduled, retried, quality-checked</text>
+
+                    <rect class="pill" x="647" y="122" width="26" height="56" rx="13"/>
+                    <text class="t-title" x="660" y="104" text-anchor="middle">Warehouse</text>
+                    <text class="t-sub" x="660" y="204" text-anchor="middle">PostgreSQL · SQL Server</text>
+                    <text class="t-sub" x="660" y="223" text-anchor="middle">Oracle · Snowflake · dbt</text>
+                    <text class="t-note" x="660" y="246" text-anchor="middle">staging → core → marts</text>
+
+                    <rect class="pill" x="887" y="122" width="26" height="56" rx="13"/>
+                    <text class="t-title" x="900" y="104" text-anchor="middle">BI</text>
+                    <text class="t-sub" x="900" y="204" text-anchor="middle">Tableau · Metabase</text>
+                    <text class="t-sub" x="900" y="223" text-anchor="middle">Domo</text>
+                    <text class="t-note" x="900" y="246" text-anchor="middle">dashboards teams trust</text>
+                </svg>
+
+                <ol class="flow-steps">
+                    <li style="--c:#2BB3A3"><strong>Sources</strong><span>Files (CSV, Excel), APIs (REST, Selenium), databases (Oracle, SQL Server, MongoDB)</span></li>
+                    <li style="--c:#F2B13B"><strong>Airflow</strong><span>Python, PySpark, Kafka, NiFi · scheduled, retried, quality-checked</span></li>
+                    <li style="--c:#E85D84"><strong>Warehouse</strong><span>PostgreSQL, SQL Server, Oracle, Snowflake, dbt · staging → core → marts</span></li>
+                    <li style="--c:#2BE4F0"><strong>BI</strong><span>Tableau, Metabase, Domo · dashboards teams trust</span></li>
+                </ol>
+            </div>
+        </section>
 
         <!-- ── SKILLS ── -->
         <section id="skills" class="fade-up fade-up-d1">
@@ -704,6 +935,50 @@
 
 {% block extra_js %}
 <script>
+    // Career timeline: place bars and pins from their YYYY-MM dates
+    (() => {
+        const gantt = document.querySelector('.gantt');
+        if (!gantt) return;
+        const toMonths = (ym) => { const [y, m] = ym.split('-').map(Number); return y * 12 + (m - 1); };
+        const now = new Date();
+        const nowM = now.getFullYear() * 12 + now.getMonth();
+        const from = toMonths(gantt.dataset.from);
+        const to = Math.max(toMonths(gantt.dataset.to), nowM + 4);
+        const pct = (m) => ((Math.min(Math.max(m, from), to) - from) / (to - from)) * 100;
+        const end = (v) => (v === 'now' ? nowM + 1 : toMonths(v) + 1);   // end of that month
+
+        gantt.querySelectorAll('.gantt-bar, .gantt-span').forEach(el => {
+            const a = toMonths(el.dataset.start), b = end(el.dataset.end);
+            el.style.left = pct(a) + '%';
+            el.style.width = Math.max(pct(b) - pct(a), 0.6) + '%';
+        });
+        gantt.querySelectorAll('.gantt-pin').forEach(el => {
+            const mid = (toMonths(el.dataset.at) + end(el.dataset.until)) / 2;
+            el.style.left = pct(mid) + '%';
+        });
+
+        const axis = gantt.querySelector('.gantt-axis');
+        const grid = gantt.querySelector('.gantt-grid');
+        const nowPct = pct(nowM + 0.5);
+        for (let y = Math.ceil(from / 12); y * 12 <= to; y++) {
+            const x = pct(y * 12);
+            grid.insertAdjacentHTML('beforeend', `<i style="left:${x}%"></i>`);
+            if (x > 97 || Math.abs(x - nowPct) < 5) continue;   // keep labels from colliding
+            axis.insertAdjacentHTML('beforeend', `<span class="gantt-tick" style="left:${x}%">${y}</span>`);
+        }
+        axis.insertAdjacentHTML('beforeend', `<span class="gantt-tick is-now" style="left:${nowPct}%">NOW</span>`);
+        grid.insertAdjacentHTML('beforeend', `<i class="is-now" style="left:${nowPct}%"></i>`);
+
+        // Link timeline pins and legend items
+        const hot = (id, on) => document.querySelectorAll(`[data-id="${id}"]`).forEach(e => e.classList.toggle('is-hot', on));
+        document.querySelectorAll('.gantt-pin, .project-legend li').forEach(el => {
+            el.addEventListener('mouseenter', () => hot(el.dataset.id, true));
+            el.addEventListener('mouseleave', () => hot(el.dataset.id, false));
+            el.addEventListener('focus', () => hot(el.dataset.id, true));
+            el.addEventListener('blur', () => hot(el.dataset.id, false));
+        });
+    })();
+
     // Animate skill bars when visible
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -729,5 +1004,18 @@
             }
         });
     });
+
+    // Highlight the sidebar link of the section currently on screen
+    const navLinks = [...document.querySelectorAll('.dash-nav-link[href^="#"]')];
+    const sections = navLinks.map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+    const updateActive = () => {
+        const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+        let current = sections[0];
+        sections.forEach(s => { if (s.getBoundingClientRect().top <= 150) current = s; });
+        if (atBottom) current = sections[sections.length - 1];
+        navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current.id));
+    };
+    window.addEventListener('scroll', updateActive, { passive: true });
+    updateActive();
 </script>
 {% endblock %}

@@ -38,6 +38,8 @@
             font-family: 'Poppins', sans-serif;
             color: var(--text-primary);
             overflow-x: hidden;
+            /* clip (unlike hidden) does not make body a scroll container, so position: sticky keeps working */
+            overflow-x: clip;
         }
 
         /* ─── BACKGROUND ─── */
