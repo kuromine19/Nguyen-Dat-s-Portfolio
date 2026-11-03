@@ -159,8 +159,8 @@ STATIC_ROOT=os.path.join(BASE_DIR,'staticfiles')
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Contact form: messages are sent from the browser to Web3Forms, which emails them on.
-# The access key is public by design (it only allows sending to your inbox).
+# Contact form: messages are sent from the browser to Web3Forms, which emails them to you.
+# Set WEB3FORMS_ACCESS_KEY in the Render dashboard (Environment).
 WEB3FORMS_ACCESS_KEY = os.environ.get("WEB3FORMS_ACCESS_KEY", "").strip().strip("'\"")
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 

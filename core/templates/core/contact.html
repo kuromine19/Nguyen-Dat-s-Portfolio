@@ -201,7 +201,6 @@
         <!-- FORM -->
         <div class="glass-card contact-form fade-up fade-up-d3">
             <h3>Send a Message</h3>
-            {% if web3forms_access_key %}
             <form method="POST" action="https://api.web3forms.com/submit" id="contactForm">
                 <input type="hidden" name="access_key" value="{{ web3forms_access_key }}">
                 <input type="hidden" name="from_name" value="Portfolio contact form">
@@ -229,12 +228,6 @@
                 </button>
                 <div class="success-msg" id="successMsg" role="status" aria-live="polite"></div>
             </form>
-            {% else %}
-            <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.8;">
-                The contact form is not set up yet. Please email me at
-                <a href="mailto:nguyendat19222002@gmail.com">nguyendat19222002@gmail.com</a>.
-            </p>
-            {% endif %}
         </div>
     </div>
 </section>
