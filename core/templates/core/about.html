@@ -31,6 +31,7 @@
         display: flex; align-items: center; justify-content: center;
         font-family: 'Anton', sans-serif; font-size: 4rem; color: var(--primary);
     }
+    .profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
     .profile-name {
         font-family: 'Oswald', sans-serif;
         font-size: 1.4rem; font-weight: 600;
@@ -128,28 +129,26 @@
     <div class="about-grid">
         <!-- LEFT -->
         <div class="about-profile fade-up fade-up-d2">
-            <div class="profile-avatar">KM</div>
-            <div class="profile-name">NGUYEN DAT</div>
-            <div class="profile-title">ANALYTICS ENGINEER</div>
+            <div class="profile-avatar"><img src="{% static 'images/avatar.jpg' %}" alt="Nguyen Thanh Dat"></div>
+            <div class="profile-name">NGUYEN THANH DAT</div>
+            <div class="profile-title">DATA ENGINEER</div>
 
             <div class="contact-links">
                 <a href="mailto:nguyendat19222002@gmail.com" class="contact-link">
                     <i class="fas fa-envelope"></i> nguyendat19222002@gmail.com
                 </a>
-                <a href="https://github.com/kuromine19/" class="contact-link" target="_blank">
-                    <i class="fab fa-github"></i> https://github.com/kuromine19/ 
+                <a href="https://github.com/kuromine19" class="contact-link" target="_blank" rel="noopener">
+                    <i class="fab fa-github"></i> github.com/kuromine19
                 </a>
-                <a href="https://www.linkedin.com/in/nguyendat19" class="contact-link" target="_blank">
-                    <i class="fab fa-linkedin"></i> https://www.linkedin.com/in/nguyendat19/
+                <a href="https://www.linkedin.com/in/nguyendat19" class="contact-link" target="_blank" rel="noopener">
+                    <i class="fab fa-linkedin"></i> linkedin.com/in/nguyendat19
                 </a>
-		<div class="contact-links">
-    		<a href="{% static 'files/DataEngineer_NguyenThanhDat.pdf' %}" class="contact-link" target="_blank">
-        <i class="fas fa-file-pdf"></i> Download CV
-    </a>
-</div>
-                <a href="#" class="contact-link">
+                <a href="{% static 'files/DataEngineer_NguyenThanhDat.pdf' %}" class="contact-link" target="_blank">
+                    <i class="fas fa-file-pdf"></i> Download CV
+                </a>
+                <span class="contact-link">
                     <i class="fas fa-map-marker-alt"></i> Ho Chi Minh City - Vietnam
-                </a>
+                </span>
             </div>
         </div>
 
@@ -158,18 +157,18 @@
             <h2>Hello, I'm Nguyen Dat</h2>
             <div class="underline"></div>
             <p>
-                I'm an analytics engineer and developer with a passion for turning complex datasets into clear, actionable insights.
-                With experience spanning data engineering, business analysis, and full-stack development,
-                I bridge the gap between raw data and business decisions.
+                I'm a Data Engineer at Con Cung, based in Ho Chi Minh City. I design, build, and maintain
+                the pipelines that move data from raw sources to the teams who rely on it.
             </p>
             <p>
-                My journey started with data analysis and evolved into building complete data pipelines —
-                from ingestion to visualization. I enjoy every layer of the stack, from writing SQL queries
-                to deploying applications on AWS.
+                Before that, I was an Analytics Engineer at Asia Commercial Bank, where I built ETL/ELT pipelines
+                with Airflow and PySpark, tuned SQL Server and Oracle databases, and cut key HR queries from
+                90 minutes to a few seconds. My data journey started as an Analytics Engineer Intern at
+                Colgate-Palmolive Vietnam, automating business processes and building dashboards.
             </p>
             <p>
-                When I'm not working with data, I'm continuously learning — whether through online courses,
-                building side projects, or exploring new tools in the data ecosystem.
+                I graduated in Computer Science from the University of Science - VNU HCM (GPA 8.27/10).
+                Outside of work, I keep learning through side projects and new tools in the data ecosystem.
             </p>
 
             <!-- Timeline -->
@@ -182,9 +181,21 @@
                         <div class="tl-line"></div>
                     </div>
                     <div class="tl-body">
+                        <h4>Data Engineer</h4>
+                        <div class="tl-meta">Con Cung · 9/2026 – Present</div>
+                        <p>Building and maintaining data pipelines and data infrastructure for one of Vietnam's largest mother &amp; baby retail chains.</p>
+                    </div>
+                </div>
+
+                <div class="tl-item">
+                    <div>
+                        <div class="tl-dot"></div>
+                        <div class="tl-line"></div>
+                    </div>
+                    <div class="tl-body">
                         <h4>Analytics Engineer</h4>
-                        <div class="tl-meta">Asia Commercial Bank · 12/2024 – Present</div>
-			<p>Built and maintained ETL/ELT pipelines, optimized SQL Server & Oracle databases, and orchestrated workflows with Airflow. Processed large-scale datasets using PySpark and delivered clean data to support business reporting. Tools: SSMS, PL/SQL, Tableau, Metabase, Python, Airflow.</p>
+                        <div class="tl-meta">Asia Commercial Bank · 12/2024 – 7/2026</div>
+                        <p>Built and maintained ETL/ELT pipelines, optimized SQL Server &amp; Oracle databases, and orchestrated workflows with Airflow. Processed large-scale datasets with PySpark and delivered clean data for reporting. Tools: SSMS, PL/SQL, Tableau, Metabase, Python, Airflow.</p>
                     </div>
                 </div>
 
@@ -196,16 +207,18 @@
                     <div class="tl-body">
                         <h4>Analytics Engineer Intern</h4>
                         <div class="tl-meta">Colgate - Palmolive Vietnam · 4/2024 – 11/2024</div>
-			<p>Automated business processes, built Domo dashboards, and applied data analytics for quality assurance and predictive maintenance. Tools: Snowflake, NiFi, Python, SQL, PySpark.</p>
+                        <p>Automated business processes, built Domo dashboards, and applied data analytics for quality assurance and predictive maintenance. Tools: Snowflake, NiFi, Python, SQL, PySpark.</p>
                     </div>
                 </div>
 
                 <div class="tl-item">
-                    <div><div class="tl-dot"></div></div>
+                    <div>
+                        <div class="tl-dot"></div>
+                    </div>
                     <div class="tl-body">
-                        <h4>Bachelor's Degree</h4>
-                        <div class="tl-meta">University of Science · 10/2020 – 11/2024</div>
-                        <p>Graduated with a focus on Computer Science.</p>
+                        <h4>Bachelor of Computer Science</h4>
+                        <div class="tl-meta">University of Science - VNU HCM · 2020 – 2024</div>
+                        <p>GPA: 8.27/10.</p>
                     </div>
                 </div>
             </div>

@@ -266,6 +266,52 @@
     }
     .project-link:hover { color: var(--accent); }
 
+    .project-date {
+        font-size: 0.68rem;
+        color: var(--primary);
+        letter-spacing: 1px;
+        margin-bottom: 0.5rem;
+    }
+    .project-card ul {
+        font-size: 0.74rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+        padding-left: 1.1rem;
+        margin-bottom: 1rem;
+        flex: 1;
+    }
+    .project-card p:has(+ ul) { flex: 0 0 auto; margin-bottom: 0.6rem; }
+
+    /* ─── TECH STACK ─── */
+    .stack-card { padding: 1.5rem; margin-bottom: 4rem; }
+    .stack-card h3 {
+        font-family: 'Oswald', sans-serif;
+        font-size: 1rem;
+        color: var(--text-primary);
+        letter-spacing: 1px;
+        margin-bottom: 1.2rem;
+        display: flex; align-items: center; gap: 0.5rem;
+    }
+    .stack-card h3 i { color: var(--primary); }
+    .stack-row {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        gap: 0.8rem;
+        padding: 0.6rem 0;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        align-items: center;
+    }
+    .stack-row:last-child { border-bottom: none; }
+    .stack-row .label {
+        font-size: 0.75rem;
+        color: var(--text-primary);
+        letter-spacing: 0.5px;
+    }
+    .stack-row .chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    @media (max-width: 768px) {
+        .stack-row { grid-template-columns: 1fr; gap: 0.4rem; }
+    }
+
     /* ─── CERTIFICATIONS ─── */
     .cert-list {
         display: flex;
@@ -380,15 +426,55 @@
                 <div class="glass-card skill-card">
                     <h3><i class="fas fa-user-tie"></i> Professional Skills</h3>
                     <div class="soft-grid">
-                        <div class="soft-item"><i class="fas fa-check-circle"></i> Data Analysis</div>
+                        <div class="soft-item"><i class="fas fa-check-circle"></i> English (TOEIC 870/990)</div>
                         <div class="soft-item"><i class="fas fa-check-circle"></i> Problem Solving</div>
-                        <div class="soft-item"><i class="fas fa-check-circle"></i> Communication</div>
-                        <div class="soft-item"><i class="fas fa-check-circle"></i> Team Collaboration</div>
+                        <div class="soft-item"><i class="fas fa-check-circle"></i> Analytical Thinking</div>
                         <div class="soft-item"><i class="fas fa-check-circle"></i> Critical Thinking</div>
-                        <div class="soft-item"><i class="fas fa-check-circle"></i> Project Management</div>
-                        <div class="soft-item"><i class="fas fa-check-circle"></i> Business Acumen</div>
-                        <div class="soft-item"><i class="fas fa-check-circle"></i> Continuous Learning</div>
+                        <div class="soft-item"><i class="fas fa-check-circle"></i> Adaptability</div>
+                        <div class="soft-item"><i class="fas fa-check-circle"></i> Teamwork</div>
+                        <div class="soft-item"><i class="fas fa-check-circle"></i> Communication</div>
+                        <div class="soft-item"><i class="fas fa-check-circle"></i> Presentation</div>
                     </div>
+                </div>
+            </div>
+
+            <div class="glass-card stack-card">
+                <h3><i class="fas fa-layer-group"></i> Tech Stack</h3>
+                <div class="stack-row">
+                    <span class="label">Data Acquisition</span>
+                    <div class="chips"><span class="stack-chip">Selenium</span><span class="stack-chip">RESTful APIs</span><span class="stack-chip">Data Link</span></div>
+                </div>
+                <div class="stack-row">
+                    <span class="label">Languages</span>
+                    <div class="chips"><span class="stack-chip">Python</span><span class="stack-chip">SQL</span></div>
+                </div>
+                <div class="stack-row">
+                    <span class="label">Relational Databases</span>
+                    <div class="chips"><span class="stack-chip">SQL Server</span><span class="stack-chip">MySQL</span><span class="stack-chip">Oracle</span></div>
+                </div>
+                <div class="stack-row">
+                    <span class="label">NoSQL Databases</span>
+                    <div class="chips"><span class="stack-chip">MongoDB</span><span class="stack-chip">DynamoDB</span></div>
+                </div>
+                <div class="stack-row">
+                    <span class="label">Data Warehousing</span>
+                    <div class="chips"><span class="stack-chip">Redshift</span><span class="stack-chip">Snowflake</span></div>
+                </div>
+                <div class="stack-row">
+                    <span class="label">BI Tools</span>
+                    <div class="chips"><span class="stack-chip">Tableau</span><span class="stack-chip">Domo</span><span class="stack-chip">Metabase</span></div>
+                </div>
+                <div class="stack-row">
+                    <span class="label">Big Data &amp; ETL</span>
+                    <div class="chips"><span class="stack-chip">Hadoop</span><span class="stack-chip">PySpark</span><span class="stack-chip">Kafka</span><span class="stack-chip">Airflow</span><span class="stack-chip">NiFi</span><span class="stack-chip">dbt</span></div>
+                </div>
+                <div class="stack-row">
+                    <span class="label">Cloud</span>
+                    <div class="chips"><span class="stack-chip">AWS (EC2, S3, RDS, Glue, Lambda)</span></div>
+                </div>
+                <div class="stack-row">
+                    <span class="label">Other</span>
+                    <div class="chips"><span class="stack-chip">HTML</span><span class="stack-chip">CSS</span><span class="stack-chip">JavaScript</span><span class="stack-chip">Django</span><span class="stack-chip">Git</span><span class="stack-chip">Google Apps Script</span></div>
                 </div>
             </div>
         </section>
@@ -402,6 +488,80 @@
             </div>
 
             <div class="projects-grid">
+                <div class="glass-card project-card">
+                    <span class="project-tag">Data Engineering</span>
+                    <h4>Employee Attrition Prediction Pipeline</h4>
+                    <div class="project-date">2/2026 – 6/2026</div>
+                    <p>Scalable pipeline preparing HR datasets for ML models that predict employee attrition, with automated feature engineering, cleaning, and model retraining.</p>
+                    <ul>
+                        <li>Cut HR data preparation time by 80%</li>
+                        <li>Retraining cycle reduced from 1 week to 1 day</li>
+                        <li>Daily attrition-risk dashboards for HR managers</li>
+                    </ul>
+                    <div class="project-stack">
+                        <span class="stack-chip">Airflow</span>
+                        <span class="stack-chip">PySpark</span>
+                        <span class="stack-chip">Python</span>
+                        <span class="stack-chip">SQL</span>
+                        <span class="stack-chip">Oracle</span>
+                        <span class="stack-chip">Metabase</span>
+                    </div>
+                </div>
+
+                <div class="glass-card project-card">
+                    <span class="project-tag">Data Optimization</span>
+                    <h4>HR Data Optimization</h4>
+                    <div class="project-date">3/2025 – 7/2025</div>
+                    <p>Standardized HR data retrieval with optimized SQL, automated ETL workflows, and secure Metabase access through views and procedures.</p>
+                    <ul>
+                        <li>Tenure query: 1h30m → 2-3 seconds</li>
+                        <li>Employee list query: 5+ minutes → 1-2 seconds</li>
+                    </ul>
+                    <div class="project-stack">
+                        <span class="stack-chip">SQL Server</span>
+                        <span class="stack-chip">SQL</span>
+                        <span class="stack-chip">Python</span>
+                        <span class="stack-chip">Airflow</span>
+                        <span class="stack-chip">Metabase</span>
+                    </div>
+                </div>
+
+                <div class="glass-card project-card">
+                    <span class="project-tag">Data Engineering</span>
+                    <h4>Most-played Games Dashboard</h4>
+                    <div class="project-date">10/2023 – 12/2023</div>
+                    <p>Fully automated pipeline crawling Steam gameplay statistics into MongoDB Atlas, served via Django APIs and visualized with Chart.js.</p>
+                    <div class="project-stack">
+                        <span class="stack-chip">Selenium</span>
+                        <span class="stack-chip">GitHub Actions</span>
+                        <span class="stack-chip">Python</span>
+                        <span class="stack-chip">MongoDB Atlas</span>
+                        <span class="stack-chip">Django</span>
+                        <span class="stack-chip">Chart.js</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://bom.so/06TsQy" class="project-link" target="_blank" rel="noopener"><i class="fas fa-code"></i> Source</a>
+                        <a href="https://bom.so/hRPz3G" class="project-link" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Demo</a>
+                    </div>
+                </div>
+
+                <div class="glass-card project-card">
+                    <span class="project-tag">Machine Learning</span>
+                    <h4>Sentiment Analysis</h4>
+                    <div class="project-date">2/2023 – 4/2023</div>
+                    <p>ETL pipeline ingesting tweets into PostgreSQL, integrated with a Hugging Face BERT model and a Streamlit app for real-time emotion predictions.</p>
+                    <div class="project-stack">
+                        <span class="stack-chip">Python</span>
+                        <span class="stack-chip">PostgreSQL</span>
+                        <span class="stack-chip">Hugging Face</span>
+                        <span class="stack-chip">Streamlit</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://bom.so/dtdRRI" class="project-link" target="_blank" rel="noopener"><i class="fas fa-code"></i> Source</a>
+                        <a href="https://bom.so/Pslp1b" class="project-link" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Demo</a>
+                    </div>
+                </div>
+
                 <div class="glass-card project-card">
                     <span class="project-tag">Data Engineering</span>
                     <h4>E-Commerce Data Pipeline - RANG Shop</h4>
@@ -421,10 +581,10 @@
                 <div class="glass-card project-card">
                     <span class="project-tag">Web App</span>
                     <h4>Personal Portfolio</h4>
-                    <p>Full-stack Django web application with admin dashboard, data analytics layer, and automated deployment on AWS.</p>
+                    <p>Full-stack Django web application with automated deployment on Render.</p>
                     <div class="project-stack">
                         <span class="stack-chip">Django</span>
-                        <span class="stack-chip">AWS</span>
+                        <span class="stack-chip">Render</span>
                         <span class="stack-chip">Bootstrap</span>
                     </div>
                     <div class="project-links">
@@ -456,6 +616,7 @@
                 <div class="underline"></div>
             </div>
 
+            <div class="cert-list">
                 <div class="glass-card cert-card">
                     <div class="cert-icon"><i class="fas fa-language"></i></div>
                     <div class="cert-info">
